@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS-Backend", "POS-Backend\POS-Backend.csproj", "{AE1F3813-C378-4564-BF9A-B4EBAE419DEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS-Frontend", "POS-Frontend\POS-Frontend.csproj", "{8046906C-1F3D-4BAF-8402-0B6201E5F630}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE1F3813-C378-4564-BF9A-B4EBAE419DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE1F3813-C378-4564-BF9A-B4EBAE419DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE1F3813-C378-4564-BF9A-B4EBAE419DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE1F3813-C378-4564-BF9A-B4EBAE419DEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8046906C-1F3D-4BAF-8402-0B6201E5F630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8046906C-1F3D-4BAF-8402-0B6201E5F630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8046906C-1F3D-4BAF-8402-0B6201E5F630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8046906C-1F3D-4BAF-8402-0B6201E5F630}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
