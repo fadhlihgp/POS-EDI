@@ -1,0 +1,189 @@
+﻿@{
+ViewData["Title"] = "Detail Transaksi";
+}
+
+@model POS_Frontend.Models.Purchase.PurchaseResponseDto
+<!--begin::Main-->
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+    <!--begin::Content wrapper-->
+    <div class="d-flex flex-column flex-column-fluid">
+        <!--begin::Toolbar-->
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+            <!--begin::Toolbar container-->
+            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+                <!--begin::Page title-->
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                    <!--begin::Title-->
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Transaksi</h1>
+                    <!--end::Title-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="/" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="/purchase" class="text-muted text-hover-primary">Transaksi</a>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">Detail Transaksi</li>
+                        <!--end::Item-->
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+            </div>
+            <!--end::Toolbar container-->
+        </div>
+        <!--end::Toolbar-->
+
+        <!--begin::Content-->
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <!--begin::Content container-->
+            <div id="kt_app_content_container" class="app-container container-xxl">
+                <!--begin::Order details page-->
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <!--begin::Order summary-->
+                    <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                        <!--begin::Order details-->
+                        <div class="card card-flush py-4 w-50">
+                            <!--begin::Card header-->
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>Order Details</h2>
+                                </div>
+                            </div>
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0 w-100">
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                        <tbody class="fw-semibold text-gray-600">
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="ki-duotone ki-wallet fs-2 me-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>Invoice</div>
+                                            </td>
+                                            <td class="fw-bold text-end">@Model.Invoice</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="ki-duotone ki-calendar fs-2 me-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                    </i>Date Added</div>
+                                            </td>
+                                            <td class="fw-bold text-end">@Model.Date.ToString("dd MMMM yyyy")</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                            </div>
+                            <!--end::Card body-->
+                        </div>
+                        <!--end::Order details-->
+                    </div>
+                    <!--end::Order summary-->
+                    <!--begin::Tab content-->
+                    <div class="tab-content">
+                        <!--begin::Tab pane-->
+                        <div class="tab-pane fade show active" id="kt_ecommerce_sales_order_summary" role="tab-panel">
+                            <!--begin::Orders-->
+                            <div class="d-flex flex-column gap-7 gap-lg-10">
+                                <!--begin::Product List-->
+                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                    <!--begin::Card header-->
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h2>Daftar Item</h2>
+                                        </div>
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">
+                                        <div class="table-responsive">
+                                            <!--begin::Table-->
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                                <thead>
+                                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-175px">Item</th>
+                                                    <th class="min-w-70px text-end">Qty</th>
+                                                    <th class="min-w-100px text-end">Harga</th>
+                                                    <th class="min-w-100px text-end">Total</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="fw-semibold text-gray-600">
+                                                @foreach (var item in Model.PurchaseDetails)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <!--begin::Thumbnail-->
+                                                                <div class="symbol symbol-50px">
+                                                                    <img src="~/images/@item.PictureUrl" alt="pic" width="50px" height="50px"/>
+                                                                    @* <span class="symbol-label" style="background-image:url(images/0e58a6ee-10c3-4c6e-b86e-756e0dbcbf8a.png)"></span> *@
+                                                                </div>
+                                                                <!--end::Thumbnail-->
+                                                                <!--begin::Title-->
+                                                                <div class="ms-5">
+                                                                    <span class="fw-bold text-gray-600 text-hover-primary">@item.Item</span>
+                                                                </div>
+                                                                <!--end::Title-->
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end">@item.Quantity</td>
+                                                        <td class="text-end">Rp @item.Price</td>
+                                                        <td class="text-end">Rp @item.Total</td>
+                                                    </tr>
+                                                }
+                                                
+                                                <tr>
+                                                    <td colspan="4" class="fs-3 text-gray-900 text-end">Grand Total</td>
+                                                    <td class="text-gray-900 fs-3 fw-bolder text-end">Rp @Model.TotalPrice</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <!--end::Table-->
+                                        </div>
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Product List-->
+                            </div>
+                            <!--end::Orders-->
+                        </div>
+                        <!--end::Tab pane-->
+                    </div>
+                    <!--end::Tab content-->
+                </div>
+                <!--end::Order details page-->
+            </div>
+            <!--end::Content container-->
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Content wrapper-->
+</div>
+<!--end:::Main-->
+

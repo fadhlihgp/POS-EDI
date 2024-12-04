@@ -1,0 +1,302 @@
+﻿@{
+    ViewData["Title"] = "Add Transaksi";
+}
+
+@model POS_Frontend.Models.Purchase.PurchaseRequestDto
+<!--begin::Main-->
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+	<!--begin::Content wrapper-->
+	<div class="d-flex flex-column flex-column-fluid">
+		<!--begin::Toolbar-->
+		<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+			<!--begin::Toolbar container-->
+			<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+				<!--begin::Page title-->
+				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+					<!--begin::Title-->
+					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Transaksi</h1>
+					<!--end::Title-->
+					<!--begin::Breadcrumb-->
+					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+						<!--begin::Item-->
+						<li class="breadcrumb-item text-muted">
+												<a href="/" class="text-muted text-hover-primary">Home</a>
+											</li>
+						<!--end::Item-->
+						<!--begin::Item-->
+						<li class="breadcrumb-item">
+							<span class="bullet bg-gray-500 w-5px h-2px"></span>
+						</li>
+						<!--end::Item-->
+						<!--begin::Item-->
+						<li class="breadcrumb-item text-muted">Add Transaksi</li>
+						<!--end::Item-->
+					</ul>
+					<!--end::Breadcrumb-->
+				</div>
+				<!--end::Page title-->
+			</div>
+			<!--end::Toolbar container-->
+		</div>
+		<!--end::Toolbar-->
+
+		<!--begin::Content-->
+		<div id="kt_app_content" class="app-content flex-column-fluid">
+			<!--begin::Content container-->
+			<div id="kt_app_content_container" class="app-container container-xxl">
+				<!--begin::Form-->
+				<form asp-action="Create" method="post" id="kt_ecommerce_edit_order_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="apps/ecommerce/sales/listing.html">
+					<!--begin::Aside column-->
+					<div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
+						<!--begin::Order details-->
+						<div class="card card-flush py-4">
+							<!--begin::Card header-->
+							<div class="card-header">
+								<div class="card-title">
+									<h2>Order Details</h2>
+								</div>
+							</div>
+							<!--end::Card header-->
+							<!--begin::Card body-->
+							<div class="card-body pt-0">
+								<div class="d-flex flex-column gap-10">
+									<!--begin::Input group-->
+									<div class="fv-row">
+										<!--begin::Label-->
+										<label class="form-label">Invoice</label>
+										<!--end::Label-->
+										<!--begin::Auto-generated ID-->
+										<div class="fw-bold fs-3">@Model.Invoice</div>
+										<input type="text" hidden value="@Model.Invoice" asp-for="Invoice" />
+										<!--end::Input-->
+									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="fv-row">
+										<!--begin::Label-->
+										<label class="required form-label">Order Date</label>
+										<!--end::Label-->
+										<!--begin::Editor-->
+										<input id="kt_ecommerce_edit_order_date" name="date" asp-for="Date" placeholder="Select a date" class="form-control mb-2" value="@DateTime.Now.Date" />
+										<!--end::Editor-->
+										<!--begin::Description-->
+										<div class="text-muted fs-7">Set the date of the order to process.</div>
+										<!--end::Description-->
+									</div>
+									<!--end::Input group-->
+								</div>
+							</div>
+							<!--end::Card header-->
+						</div>
+						<!--end::Order details-->
+					</div>
+					<!--end::Aside column-->
+					<!--begin::Main column-->
+					<div class="d-flex flex-column flex-lg-row-fluid gap-7 gap-lg-10">
+						<!--begin::Order details-->
+						<div class="card card-flush py-4">
+							<!--begin::Card header-->
+							<div class="card-header">
+								<div class="card-title">
+									<h2>Select Products</h2>
+								</div>
+							</div>
+							<!--end::Card header-->
+							<!--begin::Card body-->
+							<div class="card-body pt-0">
+								<div class="d-flex flex-column gap-10">
+									<!--begin::Input group-->
+									<div>
+										<!--begin::Label-->
+										<label class="form-label">Add items to this order</label>
+										<!--end::Label-->
+										<!--begin::Selected products-->
+										<!--begin::Selected products-->
+										<!--begin::Table wrapper-->
+										<div class="table-responsive mb-10 p-3">
+											<!--begin::Table-->
+											<table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
+												<!--begin::Table head-->
+												<thead>
+												<tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
+													<th class="min-w-300px w-475px">Item</th>
+													<th class="min-w-100px w-100px">QTY</th>
+													<th class="min-w-150px w-150px">Price</th>
+													<th class="min-w-150px w-150px">Total</th>
+													<th class="min-w-75px w-75px text-end">Action</th>
+												</tr>
+												</thead>
+												<!--end::Table head-->
+												<!--begin::Table body-->
+												<tbody id="details-table">
+												@if (Model.PurchaseDetails != null)
+												{
+													@for (int i = 0; i < Model.PurchaseDetails.Count(); i++)
+													{
+														<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
+															<td>
+																<select class="form-select form-control-solid mb-2 item-select" data-control="select2" ata-allow-clear="true" name="PurchaseDetails[@i].ItemId" asp-for="PurchaseDetails.ElementAt(i).ItemId">
+																	<option></option>
+																	@if (ViewBag.Items != null)
+																	{
+																		foreach (var product in ViewBag.Items)
+																		{
+																			if (product.Id == Model.PurchaseDetails.ElementAt(i).ItemId)
+																			{
+																				<option value="@product.Id" data-price="@product.Price" selected>@product.Name (Stok - @product.Stok)</option>
+																			}
+																			else
+																			{
+																				<option value="@product.Id" data-price="@product.Price">@product.Name (Stok - @product.Stok)</option>
+																			}
+																		}
+																	}
+																</select>
+															</td>
+															<td>
+																<input class="form-control form-control-solid item-qty" type="number" min="1" name="PurchaseDetails[@i].Quantity" asp-for="PurchaseDetails.ElementAt(i).Quantity" />
+																<span asp-validation-for="PurchaseDetails.ElementAt(i).Quantity" class="text-danger"></span>
+															</td>
+															<td>
+																<input class="form-control form-control-solid text-end item-price" type="number" disabled step="0.01" name="PurchaseDetails[@i].Price" asp-for="PurchaseDetails.ElementAt(i).Price" />
+																<span asp-validation-for="PurchaseDetails.ElementAt(i).Price" class="text-danger"></span>
+															</td>
+															<td>
+																<input class="form-control form-control-solid text-end item-total" disabled type="number" step="0.01" value="@(Model.PurchaseDetails.ElementAt(i).Price * Model.PurchaseDetails.ElementAt(i).Quantity)" />
+															</td>
+															<td class="pt-5 text-end">
+																<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+																	Delete
+																</button>
+															</td>
+														</tr>;
+													}
+												}
+												</tbody>
+												<!--end::Table body-->
+												<!--begin::Table foot-->
+												<tfoot>
+												<tr class="border-top border-top-dashed align-top fs-6 fw-bold text-gray-700">
+													<th class="text-primary">
+														<button class="btn btn-link py-1" id="add-detail" type="button" data-kt-element="add-item">Add item</button>
+														<br/>
+														<span asp-validation-for="PurchaseDetails" class="text-danger"></span>
+													</th>
+												</tr>
+												</tfoot>
+												<!--end::Table foot-->
+											</table>
+										</div>
+										<!--end::Table-->
+										<!--begin::Total price-->
+										<div class="fw-bold fs-4">Total Transaksi:
+											<span id="kt_ecommerce_edit_order_total_price">0.00</span></div>
+										<!--end::Total price-->
+									</div>
+									<!--end::Input group-->
+								</div>
+							</div>
+							<!--end::Card header-->
+						</div>
+						<!--end::Order details-->
+						<div class="d-flex justify-content-end">
+							<!--begin::Button-->
+							<a href="/purchase" id="kt_ecommerce_edit_order_cancel" class="btn btn-light me-5">Cancel</a>
+							<!--end::Button-->
+							<!--begin::Button-->
+							<button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-primary">
+								<span class="indicator-label">Save Changes</span>
+								<span class="indicator-progress">Please wait... 
+									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+							</button>
+							<!--end::Button-->
+						</div>
+					</div>
+					<!--end::Main column-->
+				</form>
+				<!--end::Form-->
+			</div>
+			<!--end::Content container-->
+			<!--end::Content-->		<!--end::Content-->
+		</div>
+	</div>
+	<!--end::Content wrapper-->
+</div>
+<!--end:::Main-->
+<script>
+    $(document).ready(function () {
+        let detailIndex = @Model.PurchaseDetails.Count();
+
+        // Tambah baris baru
+        $('#add-detail').click(function () {
+            const newRow = `
+                <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
+                    <td>
+                        <select class="form-select form-control-solid mb-2 item-select" data-control="select2" ata-allow-clear="true" name="PurchaseDetails[${detailIndex}].ItemId">
+                            <option></option>
+                            @if (ViewBag.Items != null)
+                            {
+                                foreach (var product in ViewBag.Items)
+                                {
+                                    <option value="@product.Id" data-price="@product.Price">@product.Name (Stok - @product.Stok)</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control form-control-solid item-qty" type="number" min="1" name="PurchaseDetails[${detailIndex}].Quantity" value="1" />
+                    </td>
+                    <td>
+                        <input class="form-control form-control-solid text-end item-price" min="1" type="number" name="PurchaseDetails[${detailIndex}].Price" />
+                    </td>
+                    <td>
+						<input class="form-control form-control-solid text-end item-total" disabled type="number" step="0.01" value="0.00" />
+                    </td>
+                    <td class="pt-5 text-end">
+						<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+							Delete
+						</button>
+                    </td>
+                </tr>`;
+            $('#details-table').append(newRow);
+            detailIndex++;
+        });
+        
+        // Hapus baris
+        $('#details-table').on('click', '[data-kt-element="remove-item"]', function () {
+            $(this).closest('tr').remove();
+        });
+
+	    $('#details-table').on('change', '.item-select', function () {
+			console.log("Test change");
+		    const price = $(this).find(':selected').data('price');
+		    const priceInput = $(this).closest('tr').find('.item-price');
+		    const itemQty = $(this).closest('tr').find('.item-qty');
+	
+		    const priceTotal = $(this).closest('tr').find('.item-total');
+		    priceTotal.val((price*itemQty.val()) || 0.00)
+		    
+		    priceInput.val(price || 0.00);
+	    });
+
+	    // Handle changes to quantity or price
+	    $('#details-table').on('change', '.item-qty, .item-price', function() {
+		    const priceInput = $(this).closest('tr').find('.item-price');
+		    
+		    const qty = $(this).closest('tr').find('.item-qty');
+		    const total = qty.val()*priceInput.val();
+		    
+		    const priceTotal = $(this).closest('tr').find('.item-total');
+		    priceTotal.val(total || 0.00)
+	    });
+	    
+	    $('#details-table').on('change', '.item-select, .item-qty, .item-price', function () {
+	    console.log("Test change");
+			let grandTotal = 0;
+           $('.item-total').each(function() {
+               grandTotal += parseFloat($(this).val()) || 0;
+           });
+           $('#kt_ecommerce_edit_order_total_price').text(grandTotal.toFixed(2));
+       });
+    });
+</script>
